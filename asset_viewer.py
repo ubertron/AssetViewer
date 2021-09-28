@@ -2,9 +2,11 @@
 
 import sys
 
-from PySide2.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QOpenGLWidget, QSizePolicy
+from PySide2.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, \
+    QOpenGLWidget, QSizePolicy
+from PySide2.Qt3DExtras import Qt3DExtras
 from PySide2.QtCore import Qt
-
+from qt3d_window import ADQt3DWindow
 
 class AssetViewer(QWidget):
     _title = 'Asset Viewer'
@@ -19,10 +21,20 @@ class AssetViewer(QWidget):
         test_label = QLabel(self._title)
         test_label.setAlignment(Qt.AlignCenter)
         test_label.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        open_gl_widget = QOpenGLWidget()
+        # open_gl_widget = QOpenGLWidget()
+        self.qt3d_widget = QWidget.createWindowContainer(Qt3DExtras.Qt3DWindow())
         layout.addWidget(test_label)
-        layout.addWidget(open_gl_widget)
-        self.setMinimumSize(240, 120)
+        # layout.addWidget(open_gl_widget)
+        layout.addWidget(self.qt3d_widget)
+        self.setMinimumSize(320, 120)
+        self.setup_ui()
+
+    def setup_ui(self):
+        # self.qt3d_widget.createWindowContainer(ADQt3DWindow())
+        pass
+
+    def add_widget(self, widget):
+        self.layout().addWidget(widget)
 
 
 if __name__ == '__main__':
